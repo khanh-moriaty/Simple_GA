@@ -17,10 +17,10 @@ class Bisector:
         while lower_bound != upper_bound or found_global_optimum_count != num_runs:
             found_global_optimum_count = 0
             creator = Creator(population_size=population_size, string_size=string_size)
-            population = creator.create_population()
 
             for i in range(num_runs):
-                seed(42 + i)
+                seed(19520624 + i*10)
+                population = creator.create_population()
                 evolved_population = creator.evolve_population(population)
                 if cls._found_global_optimum(creator, evolved_population, string_size):
                     found_global_optimum_count += 1
