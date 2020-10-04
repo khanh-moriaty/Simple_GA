@@ -3,7 +3,6 @@ import numpy as np
 from random import seed
 from datetime import timedelta
 from bisector.bisector import Bisector
-from loading_indicator import LoadingIndicator
 
 
 def main():
