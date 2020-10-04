@@ -1,6 +1,6 @@
 import time
 from random import seed
-from bisector import Bisector
+from bisector.bisector import Bisector
 from loading_indicator import LoadingIndicator
 
 

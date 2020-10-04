@@ -9,7 +9,8 @@ class Individual:
 
     @property
     def fitness(self):
-        return self.binary_string.count('1')
+        count = self.binary_string.count('1')
+        return count
 
     def clone(self):
         return Individual(self.binary_string)
