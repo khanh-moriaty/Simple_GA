@@ -7,6 +7,8 @@ from creator.individual import Individual
 from creator.selector import Selector
 from creator.tournament import Tournament
 
+from math import log2
+
 class Creator:
 
     def __init__(self, population_size=10, string_size=5):
@@ -17,15 +19,15 @@ class Creator:
         fitness_tracker = FitnessTracker(population)
         average_fitness = fitness_tracker.get_average_fitness()
         num_times_stable = 0
-        num_generations = 1
-        while num_times_stable <= 3:
+        num_generations = 0
+        while num_times_stable < log2(len(population)):
             population = self._replace_population(population)
             fitness_tracker = FitnessTracker(population)
             new_average_fitness = fitness_tracker.get_average_fitness()
             num_times_stable += 1 if new_average_fitness == average_fitness else 0
             average_fitness = new_average_fitness
             num_generations += 1
-        return population
+        return population, num_generations
 
     def create_population(self) -> List[Individual]:
         population = []

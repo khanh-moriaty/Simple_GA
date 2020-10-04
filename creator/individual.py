@@ -1,16 +1,18 @@
+from creator import fitness_functions
+
 class Individual:
     """Wrapper class for an individual in a population."""
 
-    def __init__(self, binary_string: str):
+    def __init__(self, binary_string: str, fitness_function=fitness_functions.OneMax):
         """Construct an individual of a population
         :param binary_string: Binary string representing a member from a population.
         """
         self.binary_string = binary_string
+        self.fitness_function = fitness_function
 
     @property
     def fitness(self):
-        count = self.binary_string.count('1')
-        return count
+        return self.fitness_function(self.binary_string)
 
     def clone(self):
         return Individual(self.binary_string)

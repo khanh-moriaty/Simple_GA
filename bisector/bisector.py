@@ -13,12 +13,13 @@ class Bisector:
         success = False
         while not success:
             upper_bound = 2 * upper_bound
+            if upper_bound > 8192: return -1
             success = 0
             creator = Creator(population_size=upper_bound, string_size=string_size)
             for i in range(num_runs):
                 seed(19520624 + 10*i + seed_offset)
                 population = creator.create_population()
-                evolved_population = creator.evolve_population(population)
+                evolved_population, evaluations = creator.evolve_population(population)
                 if cls._found_global_optimum(creator, evolved_population, string_size):
                     success += 1
         return upper_bound
@@ -26,6 +27,7 @@ class Bisector:
     @classmethod
     def find_minimum_population_size(cls, string_size, seed_offset=0, num_runs=10) -> int:
         upper_bound = cls._find_upperbound(string_size, seed_offset=seed_offset)
+        if upper_bound == -1: return -1
         lower_bound = upper_bound // 2
         found_upper_bound = False
         found_global_optimum_count = 0
@@ -37,16 +39,18 @@ class Bisector:
             
             creator = Creator(population_size=population_size, string_size=string_size)
 
+            average_number_of_evaluations = 0
             for i in range(num_runs):
                 # print(population_size, i)
                 seed(19520624 + 10*i + seed_offset)
                 population = creator.create_population()
-                evolved_population = creator.evolve_population(population)
+                evolved_population, evaluations = creator.evolve_population(population)
+                average_number_of_evaluations += evaluations / 10
                 if cls._found_global_optimum(creator, evolved_population, string_size):
                     found_global_optimum_count += 1
 
             if found_global_optimum_count:
-                res = population_size
+                res = population_size, average_number_of_evaluations
                 upper_bound = population_size - 1
             else:
                 lower_bound = population_size + 1
