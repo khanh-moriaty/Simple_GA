@@ -8,7 +8,7 @@ from random import seed
 class Bisector:
 
     @classmethod
-    def _find_upperbound(cls, string_size, num_runs=10):
+    def _find_upperbound(cls, string_size, seed_offset=0, num_runs=10):
         upper_bound = 1
         success = False
         while not success:
@@ -16,7 +16,7 @@ class Bisector:
             success = 0
             creator = Creator(population_size=upper_bound, string_size=string_size)
             for i in range(num_runs):
-                seed(19520624 + i*10)
+                seed(19520624 + 10*i + seed_offset)
                 population = creator.create_population()
                 evolved_population = creator.evolve_population(population)
                 if cls._found_global_optimum(creator, evolved_population, string_size):
@@ -24,24 +24,22 @@ class Bisector:
         return upper_bound
 
     @classmethod
-    def find_minimum_population_size(cls, string_size, num_runs=10) -> int:
-        upper_bound = cls._find_upperbound(string_size)
+    def find_minimum_population_size(cls, string_size, seed_offset=0, num_runs=10) -> int:
+        upper_bound = cls._find_upperbound(string_size, seed_offset=seed_offset)
         lower_bound = upper_bound // 2
-        print('bound: ', lower_bound, upper_bound)
         found_upper_bound = False
         found_global_optimum_count = 0
         res = -1
         # while lower_bound != upper_bound or found_global_optimum_count != num_runs:
         while lower_bound <= upper_bound:
             population_size = (lower_bound + upper_bound) // 2
-            print(population_size)
             found_global_optimum_count = 0
             
             creator = Creator(population_size=population_size, string_size=string_size)
 
             for i in range(num_runs):
                 # print(population_size, i)
-                seed(19520624 + i*10)
+                seed(19520624 + 10*i + seed_offset)
                 population = creator.create_population()
                 evolved_population = creator.evolve_population(population)
                 if cls._found_global_optimum(creator, evolved_population, string_size):
@@ -73,7 +71,6 @@ class Bisector:
             #             lower_bound += 2
             #     else:  # Failed without finding upper bound.
             #         population_size *= 2  # Double population size
-
         return res
 
     @staticmethod
