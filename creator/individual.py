@@ -11,6 +11,9 @@ class Individual:
     def fitness(self):
         return self.binary_string.count('1')
 
+    def clone(self):
+        return Individual(self.binary_string)
+
     def __repr__(self):
         return "<Individual '{}'>".format(self.binary_string)
 

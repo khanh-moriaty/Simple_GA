@@ -1,7 +1,7 @@
 from random import randint
 from typing import Tuple
 
-from .individual import Individual
+from creator.individual import Individual
 
 
 class Breeder:

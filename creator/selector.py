@@ -2,7 +2,7 @@ from random import sample
 from typing import List
 from typing import Tuple
 
-from .individual import Individual
+from creator.individual import Individual
 
 
 class Selector:
@@ -14,6 +14,9 @@ class Selector:
         return [self.select_parents() for _ in range(num_pairs)]
 
     def select_parents(self) -> Tuple[Individual, Individual]:
+        
+        return self._select_random_individuals(2)
+        
         first_parent = self._select_parent()
         second_parent = self._select_parent()
         return first_parent, second_parent

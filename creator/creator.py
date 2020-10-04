@@ -1,11 +1,11 @@
 from random import randint
 from typing import List
 
-from .breeder import Breeder
-from .fitness_tracker import FitnessTracker
-from .individual import Individual
-from .selector import Selector
-
+from creator.breeder import Breeder
+from creator.fitness_tracker import FitnessTracker
+from creator.individual import Individual
+from creator.selector import Selector
+from creator.tournament import Tournament
 
 class Creator:
 
@@ -42,6 +42,28 @@ class Creator:
         return Individual(binary_string)
 
     def _replace_population(self, population: List[Individual]) -> List[Individual]:
+        
+        selector = Selector(population)
+        breeder = Breeder(self._string_size)
+        
+        num_pairs = self._population_size // 2
+        pairs_of_parents = selector.select_pairs_of_parents(num_pairs)
+        
+        offsprings = [None] * self._population_size
+        for i, parents in enumerate(pairs_of_parents):
+            children = breeder.breed(*parents)
+            offsprings[2*i:2*i+2] = children
+            
+        if offsprings[-1] is None:
+            offsprings[-1] = selector._select_random_individual().clone()
+        
+        assert len(population) == len(offsprings)
+        
+        pop = population[:] + offsprings[:]
+        tournament = Tournament(pop, size=4)
+        pop = tournament.fight(self._population_size)
+        return pop
+        
         # Select (N - 2) / 2 pairs of parents
         new_population = []
         selector = Selector(population)

@@ -16,6 +16,7 @@ class Bisector:
         found_global_optimum_count = 0
         while lower_bound != upper_bound or found_global_optimum_count != num_runs:
             found_global_optimum_count = 0
+            
             creator = Creator(population_size=population_size, string_size=string_size)
 
             for i in range(num_runs):
