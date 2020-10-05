@@ -48,16 +48,18 @@ class Creator:
         selector = Selector(population)
         breeder = Breeder(self._string_size)
         
-        num_pairs = self._population_size // 2
-        pairs_of_parents = selector.select_pairs_of_parents(num_pairs)
-        
         offsprings = [None] * self._population_size
+        
+        num_pairs = self._population_size // 2
+        # pairs_of_parents = selector.select_pairs_of_parents(num_pairs)
+        pairs_of_parents = zip(population[::2], population[1::2])
         for i, parents in enumerate(pairs_of_parents):
             children = breeder.breed(*parents)
-            offsprings[2*i:2*i+2] = children
+            offsprings[2*i:2*(i+1)] = children
             
         if offsprings[-1] is None:
-            offsprings[-1] = selector._select_random_individual().clone()
+            # offsprings[-1] = selector._select_random_individual().clone()
+            offsprings[-1] = population[-1].clone()
         
         assert len(population) == len(offsprings)
         
@@ -66,24 +68,6 @@ class Creator:
         pop = tournament.fight(self._population_size)
         return pop
         
-        # Select (N - 2) / 2 pairs of parents
-        new_population = []
-        selector = Selector(population)
-        breeder = Breeder(self._string_size)
-        num_pairs = int((self._population_size - 2) / 2)
-        pairs_of_parents = selector.select_pairs_of_parents(num_pairs)
-
-        # Breed N - 2 children
-        for parents in pairs_of_parents:
-            children = breeder.breed(*parents)
-            new_population.extend(children)
-
-        # Replace all but the 2 best parents
-        two_best_parents = selector.select_best_individuals(2)
-        new_population.extend(two_best_parents)
-
-        return new_population
-
     @staticmethod
     def get_average_fitness(population: List[Individual]) -> float:
         fitness_tracker = FitnessTracker(population)

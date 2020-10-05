@@ -18,8 +18,8 @@ class Breeder:
     #     return self._mutate(child1), self._mutate(child2)
 
     def breed(self, parent1: Individual, parent2: Individual) -> Tuple[Individual, Individual]:
-        child1, child2 = self._single_point_crossover(parent1, parent2)
-        # child1, child2 = self._uniform_crossover(parent1, parent2)
+        # child1, child2 = self._single_point_crossover(parent1, parent2)
+        child1, child2 = self._uniform_crossover(parent1, parent2)
         return child1, child2
 
     def _uniform_crossover(self, parent1: Individual, parent2: Individual) -> Tuple[Individual, Individual]:

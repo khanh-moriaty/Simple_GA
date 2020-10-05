@@ -15,17 +15,19 @@ class Tournament:
     def fight(self, new_size) -> List[Individual]:
         new_population = [None] * new_size
         population = []
+        index = 0
         for i in range(new_size):
-            if len(population) < self._size:
-                population = self._population.copy()
+            if index + self._size >= len(population):
+                population = self._population
                 shuffle(population)
-            winner, population = self._fight(population)
+                index = 0
+            winner, population = self._fight(population, index)
+            index += self._size
             new_population[i] = winner
         
         return new_population
     
     
-    def _fight(self, population: List[Individual]) -> Individual:
-        fighters = population[:self._size]
-        population = population[self._size:]
+    def _fight(self, population: List[Individual], index) -> Individual:
+        fighters = population[index:index+self._size]
         return max(fighters, key=lambda x: x.fitness), population

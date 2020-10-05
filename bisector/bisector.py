@@ -31,7 +31,7 @@ class Bisector:
         lower_bound = upper_bound // 2
         found_upper_bound = False
         found_global_optimum_count = 0
-        res = -1
+        res = -1, -1
         # while lower_bound != upper_bound or found_global_optimum_count != num_runs:
         while lower_bound <= upper_bound:
             population_size = (lower_bound + upper_bound) // 2
