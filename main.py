@@ -23,13 +23,15 @@ def bisection(string_size):
         A[i], B[i] = Bisector.find_minimum_population_size(string_size, seed_offset=i)
         print('Min[{}] = {}\t|| Eval[{}] = {:.1f}'.format(i, A[i], i, B[i]))
     C = [(x, y) for (x, y) in zip(A, B) if x != -1]
-    A, B = zip(*C)
     print()
-    
-    print('Avg_A: {:.2f}'.format(np.mean(A)))
-    print('Std_A: {:.2f}\n'.format(np.std(A)))
-    print('Avg_B: {:.2f}'.format(np.mean(B)))
-    print('Std_B: {:.2f}\n'.format(np.std(B)))
+    if len(C) == 0:
+        print('No stats!')
+    else:
+        A, B = zip(*C)
+        print('Avg_A: {:.2f}'.format(np.mean(A)))
+        print('Std_A: {:.2f}\n'.format(np.std(A)))
+        print('Avg_B: {:.2f}'.format(np.mean(B)))
+        print('Std_B: {:.2f}\n'.format(np.std(B)))
     
     t0 = int(round(time.time()-t0))
     print('Running time: {}\n'.format(timedelta(seconds=t0)))

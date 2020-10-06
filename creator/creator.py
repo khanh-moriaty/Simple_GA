@@ -52,14 +52,12 @@ class Creator:
         offsprings = [None] * self._population_size
         
         num_pairs = self._population_size // 2
-        # pairs_of_parents = selector.select_pairs_of_parents(num_pairs)
         pairs_of_parents = zip(population[::2], population[1::2])
         for i, parents in enumerate(pairs_of_parents):
             children = breeder.breed(*parents)
             offsprings[2*i:2*(i+1)] = children
             
         if offsprings[-1] is None:
-            # offsprings[-1] = selector._select_random_individual().clone()
             offsprings[-1] = population[-1].clone()
         
         assert len(population) == len(offsprings)

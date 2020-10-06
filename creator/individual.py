@@ -5,7 +5,7 @@ from creator import fitness_functions
 class Individual:
     """Wrapper class for an individual in a population."""
 
-    def __init__(self, binary_string, fitness_function=fitness_functions.Trap):
+    def __init__(self, binary_string, fitness_function=fitness_functions.OneMax):
         """Construct an individual of a population
         :param binary_string: Binary string representing a member from a population.
         """
