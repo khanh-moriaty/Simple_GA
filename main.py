@@ -11,7 +11,8 @@ def main():
     # print()
     # bisection(string_size)
     
-    for i in [10, 20, 40, 80, 160]:
+    # for i in [10, 20, 40, 80, 160]:
+    for i in [40]:
         bisection(i)
     
 def bisection(string_size):

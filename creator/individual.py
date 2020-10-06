@@ -1,9 +1,11 @@
+import numpy as np
+
 from creator import fitness_functions
 
 class Individual:
     """Wrapper class for an individual in a population."""
 
-    def __init__(self, binary_string: str, fitness_function=fitness_functions.OneMax):
+    def __init__(self, binary_string, fitness_function=fitness_functions.Trap):
         """Construct an individual of a population
         :param binary_string: Binary string representing a member from a population.
         """

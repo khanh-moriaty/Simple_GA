@@ -27,24 +27,26 @@ class Breeder:
         child2 = Individual('')
         for i in range(self._string_size):
             if randint(0, 1):
-                child1 += parent1[i]
-                child2 += parent2[i]
+                child1.binary_string += parent1[i]
+                child2.binary_string += parent2[i]
             else:
-                child1 += parent2[i]
-                child2 += parent1[i]
+                child1.binary_string += parent2[i]
+                child2.binary_string += parent1[i]
         return child1, child2
 
     def _single_point_crossover(self, parent1: Individual, parent2: Individual) -> Tuple[Individual, Individual]:
         child1 = Individual('')
         child2 = Individual('')
         k = randint(0, self._string_size-1)
-        for i in range(self._string_size):
-            if i in range(0, k):
-                child1 += parent1[i]
-                child2 += parent2[i]
-            else:
-                child1 += parent2[i]
-                child2 += parent1[i]
+        
+        for i in range(k):
+            child1.binary_string += parent1[i]
+            child2.binary_string += parent2[i]
+        
+        for i in range(k, self._string_size):
+            child1.binary_string += parent2[i]
+            child2.binary_string += parent1[i]
+        
         return child1, child2
 
     # def _mutate(self, child: Individual) -> Individual:

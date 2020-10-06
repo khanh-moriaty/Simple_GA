@@ -1,3 +1,5 @@
+import numpy as np
+
 def OneMax(binary_string):
     count = binary_string.count('1')
     return count

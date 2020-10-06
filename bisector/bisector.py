@@ -27,7 +27,7 @@ class Bisector:
     @classmethod
     def find_minimum_population_size(cls, string_size, seed_offset=0, num_runs=10) -> int:
         upper_bound = cls._find_upperbound(string_size, seed_offset=seed_offset)
-        if upper_bound == -1: return -1
+        if upper_bound == -1: return -1, -1
         lower_bound = upper_bound // 2
         found_upper_bound = False
         found_global_optimum_count = 0

@@ -8,6 +8,7 @@ from creator.selector import Selector
 from creator.tournament import Tournament
 
 from math import log2
+import numpy as np
 
 class Creator:
 
