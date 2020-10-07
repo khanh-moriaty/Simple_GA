@@ -62,7 +62,7 @@ class Creator:
         
         assert len(population) == len(offsprings)
         
-        pop = population[:] + offsprings[:]
+        pop = population + offsprings
         tournament = Tournament(pop, size=4)
         pop = tournament.fight(self._population_size)
         return pop
